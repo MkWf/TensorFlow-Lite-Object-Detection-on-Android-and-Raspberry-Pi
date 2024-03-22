@@ -209,13 +209,18 @@ fun DetectionScreen(
             val imageWidth = detectionState.tensorflowImageWidth
             val imageHeight = detectionState.tensorflowImageHeight
 
+            val screenWidth = LocalContext.current.resources.displayMetrics.widthPixels * 1f
+            val screenHeight = LocalContext.current.resources.displayMetrics.heightPixels * 1f
+
+            val scaleFactor = max(screenWidth / imageWidth, screenHeight / imageHeight)
+
             for (detection in detectionState.tensorflowDetections){
                 val boundingBox = detection.boundingBox
 
-                val top = boundingBox.top * widthScale
-                val bottom = boundingBox.bottom * widthScale
-                val left = boundingBox.left * widthScale
-                val right = boundingBox.right * widthScale
+                val top = boundingBox.top * scaleFactor
+                val bottom = boundingBox.bottom * scaleFactor
+                val left = boundingBox.left * scaleFactor
+                val right = boundingBox.right * scaleFactor
 
                 var label = detection.categories[0].label
 
