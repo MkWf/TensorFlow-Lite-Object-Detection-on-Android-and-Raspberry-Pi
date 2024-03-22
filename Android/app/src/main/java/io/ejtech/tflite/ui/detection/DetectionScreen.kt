@@ -211,8 +211,6 @@ fun DetectionScreen(
 
             for (detection in detectionState.tensorflowDetections){
                 val boundingBox = detection.boundingBox
-                val widthScale = 2168f / imageWidth
-                val heightScale = 1008f / imageHeight
 
                 val top = boundingBox.top * widthScale
                 val bottom = boundingBox.bottom * widthScale
