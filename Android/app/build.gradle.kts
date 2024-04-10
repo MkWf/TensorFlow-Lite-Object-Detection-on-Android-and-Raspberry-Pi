@@ -87,6 +87,43 @@ dependencies {
     implementation(libs.tflite.task.vision)
     implementation(libs.tflite.gpu)
 
+    //SpeechConverter
+    implementation("org.apache.commons:commons-text:1.10.0")
+
+    // WebView
+    implementation("com.google.accompanist:accompanist-webview:0.31.1-alpha")
+
+    //System UI bars
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.2-alpha")
+
+    // CameraX dependencies
+    implementation("androidx.camera:camera-camera2:1.3.0-alpha07")
+    implementation("androidx.camera:camera-lifecycle:1.3.0-alpha07")
+    implementation("androidx.camera:camera-view:1.3.0-alpha07")
+
+    // Coil
+    implementation ("io.coil-kt:coil-compose:1.3.2")
+
+    // Zxing
+    implementation ("com.google.zxing:core:3.3.3")
+
+    // Scanner
+    implementation ("com.google.android.gms:play-services-code-scanner:16.0.0")
+    implementation ("com.google.android.gms:play-services-base:18.2.0")
+    implementation ("com.google.mlkit:barcode-scanning:17.1.0")
+
+    // Firebase
+    implementation ("com.google.firebase:firebase-auth-ktx:22.0.0")
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation("com.google.firebase:firebase-database-ktx")
+
+    // DataStore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Google in-app update
+    implementation ("com.google.android.play:app-update:2.0.1")
+    implementation ("com.google.android.play:app-update-ktx:2.0.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
