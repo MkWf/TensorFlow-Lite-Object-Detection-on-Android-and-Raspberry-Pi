@@ -1,5 +1,7 @@
 package io.ejtech.tflite.ui.detection
 
+import android.view.Surface
+import io.ejtech.tflite.Yolov8Ncnn
 import org.tensorflow.lite.task.gms.vision.detector.Detection
 
 /**
@@ -8,6 +10,8 @@ import org.tensorflow.lite.task.gms.vision.detector.Detection
 data class DetectionState(
     var tensorflowEnabled: Boolean = false,
     var tensorflowDetections: MutableList<DetectionMut> = mutableListOf(),
+    var yolov8Ncnn: Yolov8Ncnn? = null,
+    var surface: Surface? = null,
     var tensorflowImageHeight: Int = 0,
     var tensorflowImageWidth: Int = 0,
     var inferenceTimeAvg: Double = 0.0,
