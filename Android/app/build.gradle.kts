@@ -22,6 +22,13 @@ android {
         }
     }
 
+    externalNativeBuild {
+        cmake {
+            version= "3.10.2"
+            path=file("jni/CMakeLists.txt")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
