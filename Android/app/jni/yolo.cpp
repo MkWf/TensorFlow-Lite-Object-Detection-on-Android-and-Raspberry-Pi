@@ -140,7 +140,7 @@ static void generate_grids_and_stride(const int target_w, const int target_h, st
 static void generate_proposals(std::vector<GridAndStride> grid_strides, const ncnn::Mat& pred, float prob_threshold, std::vector<Object>& objects)
 {
     const int num_points = grid_strides.size();
-    const int num_class = 4;
+    const int num_class = 80;
     const int reg_max_1 = 16;
 
     for (int i = 0; i < num_points; i++)
@@ -246,10 +246,10 @@ int Yolo::load(AAssetManager* mgr, const char* modeltype, int _target_size, cons
 
     char parampath[256];
     char modelpath[256];
-    sprintf(parampath, "best_n-sim-opt.param", modeltype);
-    sprintf(modelpath, "best_n-sim-opt.bin", modeltype);
-    //sprintf(parampath, "yolov8%s.param", modeltype);
-    //sprintf(modelpath, "yolov8%s.bin", modeltype);
+    //sprintf(parampath, "best_n-sim-opt.param", modeltype);
+    //sprintf(modelpath, "best_n-sim-opt.bin", modeltype);
+    sprintf(parampath, "yolov8n.param", modeltype);
+    sprintf(modelpath, "yolov8n.bin", modeltype);
 
     yolo.load_param(mgr, parampath);
     yolo.load_model(mgr, modelpath);
@@ -304,7 +304,7 @@ int Yolo::detect(const cv::Mat& rgb, std::vector<Object>& objects, float prob_th
     std::vector<Object> proposals;
     
     ncnn::Mat out;
-    ex.extract("output0", out);
+    ex.extract("output", out);
 
     std::vector<int> strides = {8, 16, 32}; // might have stride=64
     std::vector<GridAndStride> grid_strides;
@@ -359,16 +359,16 @@ int Yolo::detect(const cv::Mat& rgb, std::vector<Object>& objects, float prob_th
 int Yolo::draw(cv::Mat& rgb, const std::vector<Object>& objects)
 {
     static const char* class_names[] = {
-        "penny", "nickel", "dime", "quarter"
-        //"person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
-        //"fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow",
-        //"elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee",
-        //"skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard",
-        //"tennis racket", "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple",
-        //"sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "chair", "couch",
-        //"potted plant", "bed", "dining table", "toilet", "tv", "laptop", "mouse", "remote", "keyboard", "cell phone",
-        //"microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear",
-        //"hair drier", "toothbrush"
+        //"penny", "nickel", "dime", "quarter"
+        "person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
+        "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow",
+        "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee",
+        "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard",
+        "tennis racket", "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple",
+        "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "chair", "couch",
+        "potted plant", "bed", "dining table", "toilet", "tv", "laptop", "mouse", "remote", "keyboard", "cell phone",
+        "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear",
+        "hair drier", "toothbrush"
     };
 
     static const unsigned char colors[19][3] = {

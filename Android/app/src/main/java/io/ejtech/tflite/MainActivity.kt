@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        yolov8Ncnn.loadModel(this.assets, 0,0)
         keepScreenOn()
         setContent {
             MyApplicationTheme {
