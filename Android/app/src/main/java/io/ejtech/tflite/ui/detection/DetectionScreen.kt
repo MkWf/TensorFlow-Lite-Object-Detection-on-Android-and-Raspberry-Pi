@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
+import android.os.SystemClock
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -155,7 +156,7 @@ fun DetectionScreen(
                     it.scaleType = PreviewView.ScaleType.FILL_START
                     //Ratio that best matches our model image format
                     val preview = Preview.Builder()
-                        .setTargetAspectRatio(AspectRatio.RATIO_4_3)
+                        //.setTargetAspectRatio(AspectRatio.RATIO_4_3)
                         .build()
                     //Use the rear camera
                     val selector = CameraSelector.Builder()
@@ -165,7 +166,7 @@ fun DetectionScreen(
 
                     //Passes each camera frame to the viewmodel to detect objects
                     var imageAnalyzer: ImageAnalysis = ImageAnalysis.Builder()
-                        .setTargetAspectRatio(AspectRatio.RATIO_4_3)
+                        //.setTargetAspectRatio(AspectRatio.RATIO_4_3)
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                         .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
                         .build()
@@ -178,7 +179,9 @@ fun DetectionScreen(
                                         Bitmap.Config.ARGB_8888
                                     )
                                 }
-                                detectionViewModel.detectObjects(image, imageBitmap!!, boxsize)
+                                var inferenceTime = SystemClock.uptimeMillis()
+                                image.use { imageBitmap!!.copyPixelsFromBuffer(image.planes[0].buffer) }
+                                detectionViewModel.detect(imageBitmap!!, boxsize)
                             }
                         }
 

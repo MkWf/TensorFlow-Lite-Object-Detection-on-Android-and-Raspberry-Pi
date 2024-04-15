@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.ejtech.tflite.ui.detection.ObjectDetector
 import io.ejtech.tflite.ui.detection.ObjectDetectorHelper
 import javax.inject.Singleton
 
@@ -22,5 +23,11 @@ object AppModule {
     @Singleton
     fun provideObjectDetectorHelper(context: Context): ObjectDetectorHelper {
         return ObjectDetectorHelper(context = context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideObjectDetector(context: Context): ObjectDetector {
+        return ObjectDetector(context)
     }
 }

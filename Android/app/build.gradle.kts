@@ -87,6 +87,9 @@ dependencies {
     implementation(libs.tflite.task.vision)
     implementation(libs.tflite.gpu)
 
+    implementation("com.microsoft.onnxruntime:onnxruntime-android:latest.release")
+    implementation("com.microsoft.onnxruntime:onnxruntime-extensions-android:latest.release")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

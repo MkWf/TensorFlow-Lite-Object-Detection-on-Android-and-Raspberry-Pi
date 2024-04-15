@@ -3,6 +3,7 @@ package io.ejtech.tflite.ui.detection
 import android.graphics.Bitmap
 import android.graphics.RectF
 import android.os.SystemClock
+import android.util.Log
 import androidx.camera.core.ImageProxy
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -15,12 +16,17 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.max
 
+
 @HiltViewModel
 class DetectionViewModel @Inject constructor(
+    private val objectDetector: ObjectDetector,
     private val objectDetectorHelper: ObjectDetectorHelper
 ): ViewModel() {
 
@@ -64,6 +70,21 @@ class DetectionViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun detect(bitmapBuffer: Bitmap, boxsize: Size) {
+        var inferenceTime = SystemClock.uptimeMillis()
+
+        //Passes the bitmapBuffer with the current device rotation
+        val baos = ByteArrayOutputStream()
+        bitmapBuffer.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        var isp: InputStream = ByteArrayInputStream(baos.toByteArray())
+        isp.reset()
+
+        val resultState = objectDetector.detect(isp)
+        for(result in resultState.outputBox){
+            
         }
     }
 
